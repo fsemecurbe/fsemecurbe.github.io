@@ -56,19 +56,21 @@
 
 <div id="map"></div>
 <div id='options' class='options'>
-    <div id='year'>Année de la population : 1876</div>
+    <div id='year'>Année de la population : 1880</div>
      <input type="range" id="year-modifier"
-            min="1876" max="2017" value="0" step="1"
+            min="1880" max="2015" value="0" step="5"
             onchange="changeYear(this.value)" oninput="changeYear(this.value)">
 </div>
 
 <div id='legend' class='legend'>
     <h4>Population density</h4>
-    <div><span style='background-color: rgb(153,52,4)'></span> > 10000</div>
-    <div><span style='background-color: rgb(217,95,14)'></span>1000 - 10000</div>
-    <div><span style='background-color: rgb(254,153,41)'></span>500 - 1000</div>
-    <div><span style='background-color: rgb(254,217,142)'></span>100 - 500</div>
-    <div><span style='background-color: rgb(255,255,212)'></span>0 - 100</div>
+	<div><span style='background-color: #d7191c'></span> > 10 </div>
+	<div><span style='background-color: #f17c4a'></span> 5 - 10</div>
+    <div><span style='background-color: #fec980'></span>  2 - 5</div>
+    <div><span style='background-color: #ffffbf'></span> -2 - 2</div>
+    <div><span style='background-color: #c7e6db'></span>-5 - -2</div>
+    <div><span style='background-color: #81bad8'></span> -10 - -5</div>
+    <div><span style='background-color: #2c7bb6'></span> < -10 </div>
 </div>
 
 
@@ -77,37 +79,46 @@
 var map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/mapbox/streets-v11',
-center: [2.285156, 48.980217],
-zoom: 4
+
+zoom: 12
 });
+
+map.fitBounds([
+[-5.493164, 41.771312],
+[8.437500, 51.585474]
+]);
 
 var year = 1960; 
 map.on('load', function () {
 map.addSource('population', {
 'type': 'vector',
-'url': 'mapbox://francoissemecurbe.5ujqpn1f'
+'url': 'mapbox://francoissemecurbe.18bq5r7u'
 });
 map.addLayer({
 'id': 'population',
 'type': 'fill',
 'source': 'population',
-'source-layer': 'population_carreau5-5mvbpm',
+'source-layer': 'population_carreau-56ic8i',
 'layout': {},
 'paint': {
 'fill-color': [
 'interpolate',
 ['linear'],
-['get', 'P_1876'],
-0,
-'#ffffd4',
-100,
-'#fed98e',
-500,
-'#fe9929',
-1000,
-'#d95f0e',
-10000,
-'#993404'
+['get', 'EP_1880'],
+-10000000,
+'#2c7bb6',
+-10,
+'#81bad8',
+-5,
+'#c7e6db',
+-2,
+'#ffffbf',
+2,
+'#fec980',
+5,
+'#f17c4a',
+10,
+'#d7191c'
 ],
 'fill-opacity': 0.75
 }
@@ -122,17 +133,21 @@ function changeYear(yearValue){
 		 map.setPaintProperty('population','fill-color',[
 'interpolate',
 ['linear'],
-['get', 'P_'+ year],
-0,
-'#ffffd4',
-100,
-'#fed98e',
-500,
-'#fe9929',
-1000,
-'#d95f0e',
-10000,
-'#993404'
+['get', 'EP_'+ year],
+-10000000,
+'#2c7bb6',
+-10,
+'#81bad8',
+-5,
+'#c7e6db',
+-2,
+'#ffffbf',
+2,
+'#fec980',
+5,
+'#f17c4a',
+10,
+'#d7191c'
 ]);
      }
 
