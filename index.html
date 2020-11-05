@@ -2,85 +2,109 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Evolution de la population sur 150 ans</title>
+<title>130 de variation de population</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
 <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
 <style>
-         body { margin: 0; padding: 0; }
+
          #map { position: absolute; top: 0; bottom: 0; width: 100%; }
-		          .legend {
-             background-color: #fff;
-             border-radius: 3px;
-             bottom: 5px;
-             box-shadow: 0 1px 2px rgba(0,0,0,0.10);
-             font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-             padding: 5px;
-             position: absolute;
-             right: 10px;
-             z-index: 1;
-         }
-         .legend h4 { margin: 0 0 5px;  }
-		 
-		          .legend div span {
-             border-radius: 50%;
-             display: inline-block;
-             height: 10px;
-             margin-right: 2px;
-             width: 10px;
-         }
-		 
-         .options {
-             background-color: #fff;
-             border-radius: 3px;
-             bottom: 5px;
-             box-shadow: 0 1px 2px rgba(0,0,0,0.10);
-             font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-             padding: 5px;
-             position: absolute;
-             left: 10px;
-             z-index: 1;
-         }
-         
-         .alignright{ float: right}
 
-         .alignleft{ float: left}
+        .legend {
+          font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+		  background-color: #fff;
+          border-radius: 3px;
+          bottom: 30px;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+          padding: 10px;
+          position: absolute;
+          right: 10px;
+          z-index: 1;
+        }
 
-         .popup h4 {
-             margin: 0 0 5px;
-         }
+        .legend h4 {
+          margin: 0 0 10px;
+        }
+
+        .legend div span {
+          border-radius: 50%;
+          display: inline-block;
+          height: 10px;
+          margin-right: 5px;
+          width: 10px;
+        }
+
+        .map-overlay {
+          font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+          position: absolute;
+          width: 220px;
+          top: 0;
+          left: 0;
+          padding: 5px;
+        }
+
+        .map-overlay .map-overlay-inner {
+          background-color: #fff;
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+          border-radius: 3px;
+          padding: 5px;
+		  left : 5px;
+          margin-bottom: 10px;
+        }
+
 
     </style>
 </head>
 <body>
 
 <div id="map"></div>
-<div id='options' class='options'>
-    <div id='year'>Année de la population : 1880</div>
-     <input type="range" id="year-modifier"
-            min="1880" max="2015" value="0" step="5"
-            onchange="changeYear(this.value)" oninput="changeYear(this.value)">
-</div>
+
 
 <div id='legend' class='legend'>
-    <h4>Population density</h4>
-	<div><span style='background-color: #d7191c'></span> > 10 </div>
-	<div><span style='background-color: #f17c4a'></span> 5 - 10</div>
-    <div><span style='background-color: #fec980'></span>  2 - 5</div>
-    <div><span style='background-color: #ffffbf'></span> -2 - 2</div>
-    <div><span style='background-color: #c7e6db'></span>-5 - -2</div>
-    <div><span style='background-color: #81bad8'></span> -10 - -5</div>
-    <div><span style='background-color: #2c7bb6'></span> < -10 </div>
+    <h4>hab/km²/an</h4>
+	<div><span style='background-color: #d7191c'></span> > 2 </div>
+	<div><span style='background-color: #e85b3a'></span> 1 - 2 </div>
+	<div><span style='background-color: #f99e59'></span> 0.5 - 1</div>
+    <div><span style='background-color: #ffedaa'></span> 0.1 - 0.5</div>
+    <div><span style='background-color: #ffffbf'></span> 0 - 0.1</div>
+    <div><span style='background-color: #edf7c9'></span> -0.1 - 0</div>
+    <div><span style='background-color: #c7e6db'></span> -0.5 - -0.1</div>
+    <div><span style='background-color: #9dcfe4'></span>  -1 - -0.5</div>
+	<div><span style='background-color: #64a5cd'></span>  -2 - -1</div>
+	<div><span style='background-color: #2c7bb6'></span>  < -2 </div>
+	
+	
 </div>
 
+<div class="map-overlay">
+<div class="map-overlay-inner">
+<br> Variation densité population</br>
+<a href="https://www.insee.fr/fr/information/2414405">Source : Insee</a>
+
+<div id='year'>Année : 1880</div>
+<input type="range" id="year-modifier"
+       min="1880" max="2015" value="0" step="5" autocomplete="off"
+       onchange="changeYear(this.value)" oninput="changeYear(this.value)">
+
+<label>Opacité : <span id="slider-value">100%</span></label>
+<input
+id="slider"
+type="range"
+min="0"
+max="100"
+step="10"
+value="100"
+/>
+</div>
+</div>
+tyle>
 
 <script>
-	mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbmNvaXNzZW1lY3VyYmUiLCJhIjoiY2tkdW4wOGo5Mjl5MDJ4dHZ6NDhwc2R0ZSJ9.-gj4o_wpvohdGlG4Khg6_A'
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZnJhbmNvaXNzZW1lY3VyYmUiLCJhIjoiY2tkdW1qdTRqMGM3YzJ4cGluOGs0OGRtOSJ9.cxLDmFzvudetTA6fSa26TA'
 var map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/mapbox/streets-v11',
-
-zoom: 12
+zoom: 8
 });
 
 map.fitBounds([
@@ -88,68 +112,124 @@ map.fitBounds([
 [8.437500, 51.585474]
 ]);
 
-var year = 1960; 
+var year = 1880;
+var slider = document.getElementById('slider');
+var sliderValue = document.getElementById('slider-value');
+ 
 map.on('load', function () {
-map.addSource('population', {
+	map.addSource('population', {
+	'type': 'vector',
+	'url': 'mapbox://francoissemecurbe.cugscqo0'
+	});
+map.addSource('region', {
 'type': 'vector',
-'url': 'mapbox://francoissemecurbe.18bq5r7u'
+'url': 'mapbox://francoissemecurbe.6qdq9xft'
 });
+
+
+	
+	
 map.addLayer({
 'id': 'population',
 'type': 'fill',
 'source': 'population',
-'source-layer': 'population_carreau-56ic8i',
+'source-layer': 'population_carreau-3sfomt',
 'layout': {},
 'paint': {
+'fill-antialias' : false,
 'fill-color': [
 'interpolate',
 ['linear'],
-['get', 'EP_1880'],
--10000000,
-'#2c7bb6',
--10,
-'#81bad8',
--5,
-'#c7e6db',
+['get', 'P_1880'],
 -2,
-'#ffffbf',
-2,
+'#2c7bb6',
+-1,
+'#64a5cd',
+-0.5,
+'#9dcfe4',
+-0.1,
+'#c7e6db',
+-0,
+'#edf7c9',
+0.1,
+'#ffedaa',
+0.5,
 '#fec980',
-5,
-'#f17c4a',
-10,
+1,
+'#f99e59',
+2,
+'#e85b3a',
+10000000,
 '#d7191c'
 ],
-'fill-opacity': 0.75
+'fill-opacity': 1,
 }
 });
+
+map.addLayer({
+'id': 'region',
+'type': 'line',
+'source': 'region',
+'source-layer': 'region-b6xki9',
+'layout': {
+'line-join': 'round',
+'line-cap': 'round'
+},
+'paint': {
+'line-color': '#888',
+'line-width': 1
+}
 });
+
+
+});
+
+
 map.addControl(new mapboxgl.NavigationControl());
 
 function changeYear(yearValue){
          year = yearValue;
 		 var yearDiv = document.getElementById('year');
-         yearDiv.innerHTML ='Année de la population : ' + year;
+         yearDiv.innerHTML ='Année : ' + year;
 		 map.setPaintProperty('population','fill-color',[
 'interpolate',
 ['linear'],
-['get', 'EP_'+ year],
--10000000,
-'#2c7bb6',
--10,
-'#81bad8',
--5,
-'#c7e6db',
+['get', 'P_'+ year],
 -2,
-'#ffffbf',
-2,
+'#2c7bb6',
+-1,
+'#64a5cd',
+-0.5,
+'#9dcfe4',
+-0.1,
+'#c7e6db',
+-0,
+'#edf7c9',
+0.1,
+'#ffedaa',
+0.5,
 '#fec980',
-5,
-'#f17c4a',
-10,
-'#d7191c'
-]);
-     }
+1,
+'#f99e59',
+2,
+'#e85b3a',
+10000000,
+'#d7191c']);
+}
+
+slider.addEventListener('input', function (e) {
+// Adjust the layers opacity. layer here is arbitrary - this could
+// be another layer name found in your style or a custom layer
+// added on the fly using `addSource`.
+map.setPaintProperty(
+'population',
+'fill-opacity',
+parseInt(e.target.value, 10) / 100
+);
+ 
+// Value indicator
+sliderValue.textContent = e.target.value + '%';
+});
 
 
 </script>
