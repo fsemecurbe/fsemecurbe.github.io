@@ -1,0 +1,1 @@
+Display your area of moving zone

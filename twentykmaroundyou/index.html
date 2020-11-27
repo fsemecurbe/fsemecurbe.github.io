@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html><head>
+	<title>20 km autour de soi</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" 
+	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+	crossorigin=""/>
+   
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+	<style>	
+	#mapid { position: absolute; top: 0; bottom: 0; width: 100%; }
+			
+	.clock {
+		width: 170px;
+		text-align: center;
+		position: absolute;
+		border: 1px solid black;
+		right: 0;}
+
+    .clock .map-overlay-inner {
+        background-color: #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        border-radius: 0px;
+        padding: Opx;
+		left : 0px;
+        margin-bottom: 0px;}
+	</style>	
+</head>
+
+<body>
+	<div id="mapid" ></div> 
+
+	<div class="clock leaflet-control">
+	<div class="map-overlay-inner"> 
+	<input type="button" value="Ma position" onClick="javascript:getLocationLeaflet();"><br>
+	<label>Rayon : <span id="slider-value">20000</span></label><input id="slider" type="range" min="10000" max="20000" step="1000" value="20000">
+	</div>
+	</div>
+	
+<script>
+	var mymap = L.map('mapid').setView([48.854889, 2.348113], 10);
+
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		maxZoom: 18,
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1,
+		accessToken: 'pk.eyJ1IjoiZnJhbmNvaXNzZW1lY3VyYmUiLCJhIjoiY2tkdW1qdTRqMGM3YzJ4cGluOGs0OGRtOSJ9.cxLDmFzvudetTA6fSa26TA',
+	}).addTo(mymap);
+	
+	var circle = L.circle([48.854889, 2.348113], 20000,{
+			color: 'black',
+			fillColor: 'grey',
+			fillOpacity: 0.5
+			}).addTo(mymap);
+
+	function onMapClick(e) {circle.setLatLng(e.latlng);}
+	
+	function onLocationError(e) {alert(e.message);}
+    function onLocationFound(e) {circle.setLatLng(e.latlng);}
+    function getLocationLeaflet() {
+         mymap.on('locationfound', onLocationFound);
+         mymap.on('locationerror', onLocationError);
+         mymap.locate({setView: true, maxZoom: 10});}
+	
+	mymap.on('click', onMapClick);
+
+	var slider = document.getElementById('slider');
+	var sliderValue = document.getElementById('slider-value');
+
+	slider.addEventListener('input', function (e) {
+		circle.setRadius(parseInt(e.target.value));
+		sliderValue.textContent = e.target.value ;})
+</script>
+</body>
+</html>
