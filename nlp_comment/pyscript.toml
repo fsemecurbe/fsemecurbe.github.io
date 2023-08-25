@@ -1,1 +1,1 @@
-packages = ['files///fr_core_news_sm-3.4.0-py3-none-any.whl', 'numpy', 'matplotlib', 'pandas']
+packages = ['file:///fr_core_news_sm-3.4.0-py3-none-any.whl', 'numpy', 'matplotlib', 'pandas']
