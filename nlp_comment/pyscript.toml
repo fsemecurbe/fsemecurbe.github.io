@@ -1,1 +1,1 @@
-packages = ['./spacy-3.4.0-cp310-cp310-emscripten_3_1_14_wasm32.whl', './static/fr_core_news_sm-3.4.0-py3-none-any.whl', 'numpy', 'matplotlib', 'pandas']
+packages = ['./spacy-3.4.0-cp310-cp310-emscripten_3_1_14_wasm32.whl', 'en_core_web_sm', 'numpy', 'matplotlib', 'pandas']
