@@ -1,1 +1,1 @@
-packages = ['numpy', 'pandas',  'matplotlib', 'wordcloud' ]
+packages = ['numpy', 'pandas',  'matplotlib' ]
