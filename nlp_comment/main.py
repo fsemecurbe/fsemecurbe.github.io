@@ -14,16 +14,12 @@ CUSTOM_BUILT_PKG_NAMES = list(map(lambda name: f"{PACKAGES_PATH}/{name}-cp310-cp
     "thinc-8.1.0",
     "spacy-3.4.0",
 ]))
-SPACY_MODEL_NAME = "en_core_web_sm"
-SPACY_MODEL_VERSION = "3.4.0"
 
 
 
 
 async def main():
-    await micropip.install([
-        f"{PACKAGES_PATH}/{SPACY_MODEL_NAME}-{SPACY_MODEL_VERSION}-py3-none-any.whl"
-    ] + CUSTOM_BUILT_PKG_NAMES)  # type: ignore 
+    await micropip.install(CUSTOM_BUILT_PKG_NAMES)  # type: ignore 
     import pandas
     import matplotlib
     import spacy
