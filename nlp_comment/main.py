@@ -1,5 +1,6 @@
 import micropip
 from pyodide import to_js
+import asyncio
 
 print('test')
 
@@ -16,9 +17,19 @@ CUSTOM_BUILT_PKG_NAMES = list(map(lambda name: f"{PACKAGES_PATH}/{name}-cp310-cp
 SPACY_MODEL_NAME = "en_core_web_sm"
 SPACY_MODEL_VERSION = "3.4.0"
 
-await micropip.install([
+
+
+
+async def main():
+    await micropip.install([
         f"{PACKAGES_PATH}/{SPACY_MODEL_NAME}-{SPACY_MODEL_VERSION}-py3-none-any.whl"
-    ] + CUSTOM_BUILT_PKG_NAMES)  # type: ignore
+    ] + CUSTOM_BUILT_PKG_NAMES)  # type: ignore 
+
+asyncio.ensure_future(main())
+
+
+
+
 
 import pandas
 import matplotlib
