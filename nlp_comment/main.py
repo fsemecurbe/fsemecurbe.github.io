@@ -24,6 +24,9 @@ async def main():
     await micropip.install([
         f"{PACKAGES_PATH}/{SPACY_MODEL_NAME}-{SPACY_MODEL_VERSION}-py3-none-any.whl"
     ] + CUSTOM_BUILT_PKG_NAMES)  # type: ignore 
+    import pandas
+    import matplotlib
+    import spacy
 
 asyncio.ensure_future(main())
 
@@ -31,6 +34,3 @@ asyncio.ensure_future(main())
 
 
 
-import pandas
-import matplotlib
-import spacy
