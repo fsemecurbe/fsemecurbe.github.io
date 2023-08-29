@@ -1,5 +1,5 @@
 import micropip
-from pyodide import to_js
+from pyodide import ffi.to_js 
 import asyncio
 
 print('test')
