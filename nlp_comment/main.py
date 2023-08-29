@@ -1,6 +1,8 @@
 import micropip
 from pyodide import to_js
 
+print('test')
+
 PACKAGES_PATH = "/static"
 CUSTOM_BUILT_PKG_NAMES = list(map(lambda name: f"{PACKAGES_PATH}/{name}-cp310-cp310-emscripten_3_1_14_wasm32.whl", [
     "blis-0.7.8",
