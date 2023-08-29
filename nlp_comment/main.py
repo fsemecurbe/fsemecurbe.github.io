@@ -4,7 +4,7 @@ import asyncio
 
 print('test')
 
-PACKAGES_PATH = "/static"
+PACKAGES_PATH = "./static"
 CUSTOM_BUILT_PKG_NAMES = list(map(lambda name: f"{PACKAGES_PATH}/{name}-cp310-cp310-emscripten_3_1_14_wasm32.whl", [
     "blis-0.7.8",
     "cymem-2.0.6",
@@ -23,6 +23,8 @@ async def main():
     import pandas
     import matplotlib
     import spacy
+
+    
 
 asyncio.ensure_future(main())
 
