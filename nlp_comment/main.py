@@ -28,7 +28,7 @@ async def main():
     
 
     nlp = spacy.load("fr_core_news_sm")
-    doc = nlp('Bonjour François)
+    doc = nlp('Bonjour François')
     print(doc.text)
     
     
