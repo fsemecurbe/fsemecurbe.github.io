@@ -12,7 +12,7 @@ CUSTOM_BUILT_PKG_NAMES = list(map(lambda name: f"{PACKAGES_PATH}/{name}-cp310-cp
     "preshed-3.0.6",
     "srsly-2.4.3",
     "thinc-8.1.0",
-    "spacy-3.4.0",
+    "spacy-3.4.0", 
 ]))
 
 
