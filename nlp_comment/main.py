@@ -25,13 +25,11 @@ async def main():
     import pandas
     import matplotlib
     import spacy
-    from spacy.lang.fr.examples import sentences 
+    
 
     nlp = spacy.load("fr_core_news_sm")
-    doc = nlp(sentences[0])
+    doc = nlp('Bonjour François)
     print(doc.text)
-    for token in doc:
-        print(token.text, token.pos_, token.dep_)
     
     
 
