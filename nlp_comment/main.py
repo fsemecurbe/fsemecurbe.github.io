@@ -27,11 +27,12 @@ async def main():
     import spacy
     
 
-    nlp = spacy.load("fr_core_news_sm")
-    doc = nlp('Bonjour François')
-    print(doc.text)
     
     
+
+nlp = spacy.load("fr_core_news_sm")
+doc = nlp('Bonjour François')
+print(doc.text) 
 
 asyncio.ensure_future(main())
 
