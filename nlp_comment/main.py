@@ -22,19 +22,19 @@ CUSTOM_BUILT_PKG_NAMES = list(map(lambda name: f"{PACKAGES_PATH}/{name}-cp310-cp
 async def main():
     await micropip.install(CUSTOM_BUILT_PKG_NAMES) 
     await micropip.install(PACKAGES_PATH+'/fr_core_news_sm-3.4.0-py3-none-any.whl')
-    import pandas
-    import matplotlib
-    import spacy
-    
 
     
+asyncio.ensure_future(main())
+
     
+import pandas
+import matplotlib
+import spacy
 
 nlp = spacy.load("fr_core_news_sm")
 doc = nlp('Bonjour François')
 print(doc.text) 
 
-asyncio.ensure_future(main())
 
 
 
